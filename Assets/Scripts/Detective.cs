@@ -8,17 +8,6 @@ public class Detective : MonoBehaviour, IDetective {
 	private string _accused;
 
 
-	void Update() {
-
-		if (Input.GetKeyDown (KeyCode.E)) {
-			GameObject suspect = FindClosestSuspect();
-
-			Debug.Log ("Detective next to " + suspect.name);
-			AccuseSuspect (suspect.name);
-		}
-
-	}
-
 	void OnTriggerEnter2D(Collider2D coll) {
 		
 		if (coll.gameObject.tag == "waypoints") {
@@ -61,9 +50,13 @@ public class Detective : MonoBehaviour, IDetective {
 		}
 	}
 
-	public void AccuseSuspect (string suspect) {
-		GameLogic.Instance.AccuseSuspect(suspect);
+	public void AccuseSuspect (GameObject suspect) {
+		// TODO: move to HUD since this is a UI responsibility to stop the player from choosing a dead suspect.
+		ISuspect sus = suspect.GetComponent<ISuspect>();
 
+		if (sus != null && sus.IsDead () != true) {
+			GameLogic.Instance.AccuseSuspect (suspect.name);
+		}
 	}
 	#endregion
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour {
 
@@ -10,27 +11,28 @@ public class PlayerController : MonoBehaviour {
 	//private Rigidbody2D _rb;
 	public LayerMask _blockingLayer;
 
-	public float _maxSpeed = 2.0f;
+	public float _maxSpeed = 1.0f;
 
-//	private IDetective _detective;
+	private float hMove = float.MinValue;
+	private float vMove = float.MinValue;
+	private float hLastMove = float.MinValue;
+	private float vLastMove = float.MinValue;
 
 
 	// Use this for initialization
 	void Start () {
 		_anim = GetComponent<Animator> ();
-		//_detective = GetComponent<IDetective> ();
-
-		//_render = GetComponent<SpriteRenderer> ();
-		//_rb = GetComponent<Rigidbody2D> ();
-
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float hMove = Input.GetAxis ("Horizontal");
-		float vMove = Input.GetAxis ("Vertical");
 
+		hLastMove = hMove;
+		vLastMove = vMove;
+
+		hMove = CrossPlatformInputManager.GetAxis ("Horizontal");
+		vMove = CrossPlatformInputManager.GetAxis ("Vertical");
 		Vector3 movement = new Vector3 (_maxSpeed * hMove, _maxSpeed * vMove, 0);
 
 		movement *= Time.deltaTime;
@@ -42,11 +44,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-
-		float hLastMove = Input.GetAxis ("Horizontal");
-		float vLastMove = Input.GetAxis ("Vertical");
-
-
+		
 		if (hLastMove !=0  || vLastMove != 0) {
 			_anim.SetBool ("IsWalking", true);
 			_anim.SetFloat("hPreviousSpeed", hLastMove);

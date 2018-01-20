@@ -35,10 +35,6 @@ public class Killer : MonoBehaviour, IKiller {
 		}
 	}
 
-	public void Kill() {
-	}
-
-
 
 	public void MakeKiller ()
 	{

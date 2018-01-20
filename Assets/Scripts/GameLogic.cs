@@ -101,8 +101,9 @@ public class GameLogic {
 	public string GetRandomRoom () {
 		if (_roomNames != null) {
 			int r = _roomNames.Count - 1;
-			return _roomNames [Random.Range (0, r)];
-		} else {
+			string room = _roomNames [Random.Range (0, r)];
+			return room;
+		} else { 
 			return string.Empty;
 		}
 	}
@@ -121,6 +122,7 @@ public class GameLogic {
 	public void AccuseSuspect(string suspect) {
 		if (GameLogic.Instance.theGamesAFoot == true) {
 			_accused = suspect;
+
 			_isRight = _suspects [suspect].IsKiller ();
 			GameLogic.Instance.theGamesAFoot = false;
 

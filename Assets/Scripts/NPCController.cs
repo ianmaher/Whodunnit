@@ -8,10 +8,6 @@ public class NPCController : MonoBehaviour {
 	private List<Transform> _objsToFollow;
 	public float _speed = 2.0f;
 	public float _maxWait = 5.0f;
-//	public GameObject _wayPointsParent;
-//	private Dictionary<string, Vector3> _wayPoints;
-//	private List<string> _waypointNames;
-//	private List<string> _roomNames;
 
 	private PathWalker _pathWalker;
 	private bool _isMoving = false;
@@ -40,11 +36,6 @@ public class NPCController : MonoBehaviour {
 		
 		else if (!_isMoving && !_isWaiting && !_isDead) {
 			StartCoroutine (WaitAbit ());
-			/*
-			Debug.Log("NPC Dead");
-			_isDead = true;
-			_anim.SetTrigger ("Death");
-			*/
 		}
 
 	}
@@ -65,34 +56,13 @@ public class NPCController : MonoBehaviour {
 			_pathWalker = null;
 		}
 	}
-	/*
-	private void CreateWaypointMap() {
-
-		_wayPoints = new Dictionary<string, Vector3> ();
-		_waypointNames = new List<string> ();
-		_roomNames = new List<string> ();
-
-
-		for (int i = 0 ; i < _wayPointsParent.transform.childCount; i++ ) {
-			Transform child = _wayPointsParent.transform.GetChild(i);
-		
-			_wayPoints.Add (child.name, child.position);
-			_waypointNames.Add (child.name);
-
-			if (!child.name.Contains ("_")) {
-				_roomNames.Add(child.name);
-			}
-
-		}
-	}
-	*/
 
 	private void GotoWayPoint () {
 
 		if (_isDead)
 			return;
 		
-		string target = GameLogic.Instance.GetRandomRoom (); // _roomNames[Random.Range (0, 1)];//_roomNames[Random.Range (0, _roomNames.Count)];
+		string target = GameLogic.Instance.GetRandomRoom (); 
 		if (target == string.Empty) return;
 		Debug.Log(gameObject.name + " go to " + target);
 
